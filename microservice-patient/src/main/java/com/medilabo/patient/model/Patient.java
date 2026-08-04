@@ -16,6 +16,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Patient {
 
+    public Patient(String firstName, String lastName, LocalDate dateOfBirth,
+                   Gender gender, String address, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.address = address;
+        this.phone = phone;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +38,7 @@ public class Patient {
     @Column(nullable = false)
     private String lastName;
 
-    @NotBlank
+    @NotNull
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
