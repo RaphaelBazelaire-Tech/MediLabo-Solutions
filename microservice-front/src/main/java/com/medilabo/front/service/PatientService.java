@@ -25,4 +25,14 @@ public class PatientService {
         return restClient.get().uri("/patients/{id}", id).retrieve()
                 .body(Patient.class);
     }
+
+    public Patient createPatient(Patient patient) {
+        return restClient.post().uri("/patients")
+                .body(patient).retrieve().body(Patient.class);
+    }
+
+    public Patient updatePatient(Long id, Patient patient) {
+        return restClient.put().uri("/patients/{id}", id)
+                .body(patient).retrieve().body(Patient.class);
+    }
 }
