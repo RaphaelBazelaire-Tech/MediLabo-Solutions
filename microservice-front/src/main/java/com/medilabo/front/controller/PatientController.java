@@ -1,6 +1,8 @@
 package com.medilabo.front.controller;
 
+import com.medilabo.front.model.Note;
 import com.medilabo.front.model.Patient;
+import com.medilabo.front.service.NoteService;
 import com.medilabo.front.service.PatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PatientController {
 
     private final PatientService patientService;
+    private final NoteService noteService;
 
-    public PatientController(PatientService patientService) {
+    public PatientController(PatientService patientService, NoteService noteService) {
         this.patientService = patientService;
+        this.noteService = noteService;
     }
 
     @GetMapping("/")
@@ -32,6 +36,8 @@ public class PatientController {
     @GetMapping("/patients/{id}")
     public String patientDetail(@PathVariable Long id, Model model) {
         model.addAttribute("patient", patientService.getPatientById(id));
+        model.addAttribute("notes", noteService.getNotesByPatientId(id.intValue()));
+        model.addAttribute("newNote", new Note());
         return "patient-detail";
     }
 
