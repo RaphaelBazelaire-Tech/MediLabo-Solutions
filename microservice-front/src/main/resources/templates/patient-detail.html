@@ -22,6 +22,24 @@
     <p><strong>Adresse :</strong> <span th:text="${patient.address}"></span></p>
     <p><strong>Téléphone :</strong> <span th:text="${patient.phone}"></span></p>
     <p><a th:href="@{/patients/{id}/edit(id=${patient.id})}">✎ Modifier</a></p>
+    <hr>
+    <h2>Historique des notes</h2>
+
+    <div th:if="${notes.isEmpty()}">
+        <p><em>Aucune note pour ce patient.</em></p>
+    </div>
+
+    <ul>
+        <li th:each="n : ${notes}" th:text="${n.note}" style="white-space: pre-line; margin-bottom: .8rem;"></li>
+    </ul>
+
+    <h3>Ajouter une note</h3>
+    <form th:action="@{/patients/{id}/notes(id=${patient.id})}" th:object="${newNote}" method="post">
+        <input type="hidden" name="patientName" th:value="${patient.lastName}">
+        <textarea th:field="*{note}" rows="4" cols="60" placeholder="Observation du praticien..." required></textarea>
+        <br>
+        <button type="submit">Enregistrer la note</button>
+    </form>
     <a th:href="@{/patients}">← Retour à la liste</a>
 </body>
 </html>
