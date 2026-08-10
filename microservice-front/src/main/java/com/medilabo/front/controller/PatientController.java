@@ -6,10 +6,7 @@ import com.medilabo.front.service.NoteService;
 import com.medilabo.front.service.PatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PatientController {
@@ -62,6 +59,14 @@ public class PatientController {
     @PostMapping("/patients/{id}/update")
     public String updatePatient(@PathVariable Long id, @ModelAttribute Patient patient) {
         patientService.updatePatient(id, patient);
+        return "redirect:/patients/" + id;
+    }
+
+    @PostMapping("/patients/{id}/notes")
+    public String addNote(@PathVariable Long id, @ModelAttribute("newNote") Note note, @RequestParam String patientName) {
+        note.setPatientId(id.intValue());
+        note.setPatient(patientName);
+        noteService.addNote(note);
         return "redirect:/patients/" + id;
     }
 }
