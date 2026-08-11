@@ -29,6 +29,7 @@ public class RiskAssessmentService {
             if (triggers >= 8) return RiskLevel.EARLY_ONSET;
             if (triggers >= 6) return RiskLevel.IN_DANGER;
             if (triggers >= 2) return RiskLevel.BORDERLINE;
+            return RiskLevel.NONE;
 
         } else {
             if (isMale) {
