@@ -4,6 +4,7 @@ import com.medilabo.front.model.Note;
 import com.medilabo.front.model.Patient;
 import com.medilabo.front.service.NoteService;
 import com.medilabo.front.service.PatientService;
+import com.medilabo.front.service.RiskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,12 @@ public class PatientController {
 
     private final PatientService patientService;
     private final NoteService noteService;
+    private final RiskService riskService;
 
-    public PatientController(PatientService patientService, NoteService noteService) {
+    public PatientController(PatientService patientService, NoteService noteService, RiskService riskService) {
         this.patientService = patientService;
         this.noteService = noteService;
+        this.riskService = riskService;
     }
 
     @GetMapping("/")
@@ -35,6 +38,7 @@ public class PatientController {
         model.addAttribute("patient", patientService.getPatientById(id));
         model.addAttribute("notes", noteService.getNotesByPatientId(id.intValue()));
         model.addAttribute("newNote", new Note());
+        model.addAttribute("risk", riskService.getRisk(id));
         return "patient-detail";
     }
 
