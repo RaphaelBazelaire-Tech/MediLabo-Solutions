@@ -10,11 +10,7 @@ public class RiskService {
     private final RestClient restClient;
 
     public RiskService(RestClient patientRestClient) {
-        this.restClient = restClient(patientRestClient);
-    }
-
-    private RestClient restClient(RestClient restClient) {
-        return restClient;
+        this.restClient = patientRestClient;
     }
 
     public RiskResponse getRisk(Long patientId) {
