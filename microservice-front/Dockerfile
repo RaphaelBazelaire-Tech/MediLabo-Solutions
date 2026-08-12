@@ -1,0 +1,12 @@
+# Étape 1 - Build
+FROM eclipse-temurin:21-jdk AS build
+WORKDIR /app
+COPY . .
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
+
+# Étape 2 - Runtime
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=build /app/tarjet/*.jar app.jar
+EXPOSE 8082
+ENTRYPOINT ["java", "-jar", "app.jar"]
