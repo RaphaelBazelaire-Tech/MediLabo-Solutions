@@ -1,2 +1,84 @@
 services:
-  $END$
+
+  # Base de données MySQL
+  mysql-patient:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: medilabo_patient
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - medilabo-net
+
+  # Base de données MongoDB
+  mongo-note:
+    image: mongo:8
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - medilabo-net
+
+  # Microservices - Backend
+  microservice-patient:
+    image: medilabo/patient
+    depends_on:
+      - mysql-patient
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-patient:3306/medilabo_patient
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - medilabo-net
+
+  microservice-note:
+    image: medilabo/note
+    depends_on:
+      - mongo-note
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo-note:27017/medilabo_note
+    networks:
+      - medilabo-net
+
+  microservice-risque:
+    image: medilabo/risque
+    depends_on:
+      - microservice-patient
+      - microservice-note
+    environment:
+      GATEWAY_URL: http://microservice-gateway:8080
+    networks:
+      - medilabo-net
+
+  # Microservices - Gateway
+  microservice-gateway:
+    image: medilabo/gateway
+    depends_on:
+      - microservice-patient
+      - microservice-note
+      - microservice-risque
+    ports:
+      - "8080:8082"
+    environment:
+      GATEWAY_URL: http://microservice-gateway:8080
+    networks:
+      - medilabo-net
+
+  # Microservices - Frontend
+  microservice-front:
+    image: medilabo/front
+    depends_on:
+      - microservice-gateway
+    ports:
+      - "8082:8082"
+    environment:
+      GATEWAY_URL: http://microservice-gateway:8080
+    networks:
+      - medilabo-net
+
+networks:
+  medilabo-net:
+
+volumes:
+  mysql-data:
+  mongo-data:
