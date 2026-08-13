@@ -58,9 +58,11 @@ services:
       - microservice-note
       - microservice-risque
     ports:
-      - "8080:8082"
+      - "8080:8080"
     environment:
-      GATEWAY_URL: http://microservice-gateway:8080
+      PATIENT_URI: http://microservice-patient:8081
+      NOTE_URI: http://microservice-note:8083
+      RISQUE_URI: http://microservice-risque:8084
     networks:
       - medilabo-net
 
