@@ -21,6 +21,7 @@ services:
 
   # Microservices - Backend
   microservice-patient:
+    build: ./microservice-patient
     image: medilabo/patient
     depends_on:
       - mysql-patient
@@ -32,6 +33,7 @@ services:
       - medilabo-net
 
   microservice-note:
+    build: ./microservice-note
     image: medilabo/note
     depends_on:
       - mongo-note
@@ -41,6 +43,7 @@ services:
       - medilabo-net
 
   microservice-risque:
+    build: ./microservice-risque
     image: medilabo/risque
     depends_on:
       - microservice-patient
@@ -52,6 +55,7 @@ services:
 
   # Microservices - Gateway
   microservice-gateway:
+    build: ./microservice-gateway
     image: medilabo/gateway
     depends_on:
       - microservice-patient
@@ -68,6 +72,7 @@ services:
 
   # Microservices - Frontend
   microservice-front:
+    build: ./microservice-front
     image: medilabo/front
     depends_on:
       - microservice-gateway
