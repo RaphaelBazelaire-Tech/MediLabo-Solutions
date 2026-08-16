@@ -2,42 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Patients - Médilabo</title>
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            margin: 2rem;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: .5rem .75rem;
-            text-align: left;
-        }
-        th {
-            background: #f4f4f4;
-        }
-    </style>
+    <title>Patients — MédiLabo</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
+
 <body>
-    <h1>Patients</h1>
-    <p><a th:href="@{/patients/add}">+ Ajouter un patient</a></p>
+<header class="app-header">
+    <div class="app-header__inner">
+        <div class="app-header__title">MédiLabo Solutions</div>
+        <p class="app-header__subtitle">Aide à la détection du diabète de type 2</p>
+    </div>
+</header>
+
+<div class="container">
+    <h1>Liste des patients</h1>
+    <p><a class="btn" th:href="@{/patients/add}">+ Ajouter un patient</a></p>
+
+    <div class="card table-wrapper">
         <table>
             <thead>
-                <tr><th>Prénom</th><th>Nom</th><th>Date de naissance</th><th>Genre</th><th></th></tr>
+            <tr><th>Prénom</th><th>Nom</th><th>Date de naissance</th><th>Genre</th><th></th></tr>
             </thead>
             <tbody>
-                <tr th:each="patient : ${patients}">
-                    <td th:text="${patient.firstName}"></td>
-                    <td th:text="${patient.lastName}"></td>
-                    <td th:text="${patient.dateOfBirth}"></td>
-                    <td th:text="${patient.gender}"></td>
-                    <td><a th:href="@{/patients/{id}(id=${patient.id})}">Voir</a></td>
-                </tr>
+            <tr th:each="patient : ${patients}">
+                <td th:text="${patient.firstName}"></td>
+                <td th:text="${patient.lastName}"></td>
+                <td th:text="${patient.dateOfBirth}"></td>
+                <td th:text="${patient.gender}"></td>
+                <td><a th:href="@{/patients/{id}(id=${patient.id})}">Voir</a></td>
+            </tr>
             </tbody>
         </table>
+    </div>
+</div>
 </body>
 </html>

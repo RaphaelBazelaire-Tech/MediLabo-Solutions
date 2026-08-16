@@ -1,81 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>Dossier patient - Médilabo</title>
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            margin: 2rem;
-        }
-
-        p {
-            margin: 4rem 0;
-        }
-
-        .risk-none {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .risk-borderline {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .risk-danger {
-            background: #ffe5d0;
-            color: #9a4a00;
-        }
-
-        .risk-early {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-    </style>
+    <meta charset="UTF-8">
+    <title>Dossier patient — MédiLabo</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
+
 <body>
+<header class="app-header">
+    <div class="app-header__inner">
+        <div class="app-header__title">MédiLabo Solutions</div>
+        <p class="app-header__subtitle">Aide à la détection du diabète de type 2</p>
+    </div>
+</header>
+
+<div class="container">
     <h1>Dossier patient</h1>
-    <p><strong>Prénom :</strong> <span th:text="${patient.firstName}"></span></p>
-    <p><strong>Nom :</strong> <span th:text="${patient.lastName}"></span></p>
-    <p><strong>Date de naissance :</strong> <span th:text="${patient.dateOfBirth}"></span></p>
-    <p><strong>Genre :</strong> <span th:text="${patient.gender}"></span></p>
-    <p><strong>Adresse :</strong> <span th:text="${patient.address}"></span></p>
-    <p><strong>Téléphone :</strong> <span th:text="${patient.phone}"></span></p>
-    <p><a th:href="@{/patients/{id}/edit(id=${patient.id})}">✎ Modifier</a></p>
 
-    <hr>
-    <h2>Évaluation du risque de diabète</h2>
-    <p>
-    <span th:text="${risk.riskLevel}"
-          th:classappend="${
-              risk.riskLevel == 'None' ? 'risk-none' :
-              (risk.riskLevel == 'Borderline' ? 'risk-borderline' :
-              (risk.riskLevel == 'In Danger' ? 'risk-danger' : 'risk-early'))
-          }"
-          style="padding: .3rem .8rem; border-radius: 6px; font-weight: bold;">
-    </span>
-    </p>
-
-    <hr>
-    <h2>Historique des notes</h2>
-
-    <div th:if="${notes.isEmpty()}">
-        <p><em>Aucune note pour ce patient.</em></p>
+    <div class="card">
+        <div class="field"><span class="field__label">Prénom :</span><span th:text="${patient.firstName}"></span></div>
+        <div class="field"><span class="field__label">Nom :</span><span th:text="${patient.lastName}"></span></div>
+        <div class="field"><span class="field__label">Date de naissance :</span><span th:text="${patient.dateOfBirth}"></span></div>
+        <div class="field"><span class="field__label">Genre :</span><span th:text="${patient.gender}"></span></div>
+        <div class="field"><span class="field__label">Adresse :</span><span th:text="${patient.address}"></span></div>
+        <div class="field"><span class="field__label">Téléphone :</span><span th:text="${patient.phone}"></span></div>
+        <p><a th:href="@{/patients/{id}/edit(id=${patient.id})}">✎ Modifier</a></p>
     </div>
 
-    <ul>
-        <li th:each="n : ${notes}" th:text="${n.note}" style="white-space: pre-line; margin-bottom: .8rem;"></li>
-    </ul>
+    <div class="card">
+        <h2>Évaluation du risque de diabète</h2>
+        <span class="risk-badge"
+              th:text="${risk.riskLevel}"
+              th:classappend="${
+                  risk.riskLevel == 'None' ? 'risk-none' :
+                  (risk.riskLevel == 'Borderline' ? 'risk-borderline' :
+                  (risk.riskLevel == 'In Danger' ? 'risk-danger' : 'risk-early'))
+              }"></span>
+    </div>
 
-    <h3>Ajouter une note</h3>
-    <form th:action="@{/patients/{id}/notes(id=${patient.id})}" th:object="${newNote}" method="post">
-        <input type="hidden" name="patientName" th:value="${patient.lastName}">
-        <textarea th:field="*{note}" rows="4" cols="60" placeholder="Observation du praticien..." required></textarea>
-        <br>
-        <button type="submit">Enregistrer la note</button>
-    </form>
-    <a th:href="@{/patients}">← Retour à la liste</a>
+    <div class="card">
+        <h2>Historique des notes</h2>
+
+        <div th:if="${notes.isEmpty()}">
+            <p><em>Aucune note pour ce patient.</em></p>
+        </div>
+
+        <ul class="notes-list">
+            <li class="note-item" th:each="n : ${notes}" th:text="${n.note}"></li>
+        </ul>
+
+        <h3>Ajouter une note</h3>
+        <form th:action="@{/patients/{id}/notes(id=${patient.id})}" th:object="${newNote}" method="post">
+            <input type="hidden" name="patientName" th:value="${patient.lastName}">
+            <textarea th:field="*{note}" rows="4" placeholder="Observation du praticien..." required></textarea>
+            <button type="submit">Enregistrer la note</button>
+        </form>
+    </div>
+
+    <p><a th:href="@{/patients}">← Retour à la liste</a></p>
+</div>
 </body>
 </html>

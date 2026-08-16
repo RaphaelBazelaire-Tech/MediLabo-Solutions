@@ -3,46 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Modifier un patient - Médilabo</title>
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            margin: 2rem;
-        }
-        label {
-            display: block;
-            margin: .6rem 0 .2rem;
-            font-weight: bold;
-        }
-        input, select {
-            padding: .4rem;
-            width: 260px;
-        }
-        button {
-            margin-top: 1rem;
-            padding: .5rem 1rem;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
+
 <body>
-    <h1>Modifier un patient</h1>
-    <form th:action="@{/patients/{id}/update(id=${patient.id})}" th:object="${patient}" method="post">
-        <label>Prénom</label>
-        <input type="text" th:field="*{firstName}" required>
-        <label>Nom</label>
-        <input type="text" th:field="*{lastName}" required>
-        <label>Date de naissance</label>
-        <input type="date" th:field="*{dateOfBirth}" required>
-        <label>Genre</label>
-        <select th:field="*{gender}" required>
-            <option value="M">M</option>
-            <option value="F">F</option>
-        </select>
-        <label>Adresse (optionnel)</label>
-        <input type="text" th:field="*{address}">
-        <label>Téléphone (optionnel)</label>
-        <input type="text" th:field="*{phone}">
-        <button type="submit">Enregistrer les modifications</button>
-    </form>
-    <p><a th:href="@{/patients/{id}(id=${patient.id})}">← Retour au dossier</a></p>
+<header class="app-header">
+    <div class="app-header__inner">
+        <div class="app-header__title">MédiLabo Solutions</div>
+        <p class="app-header__subtitle">Aide à la détection du diabète de type 2</p>
+    </div>
+</header>
+
+<div class="container">
+    <h1>Ajouter un patient</h1>
+    <div class="card">
+        <form th:action="@{/patients/{id}/update(id=${patient.id})}" th:object="${patient}" method="post">
+            <label>Prénom</label>
+            <input type="text" th:field="*{firstName}" required>
+            <label>Nom</label>
+            <input type="text" th:field="*{lastName}" required>
+            <label>Date de naissance</label>
+            <input type="date" th:field="*{dateOfBirth}" required>
+            <label>Genre</label>
+            <select th:field="*{gender}" required>
+                <option value="M">M</option>
+                <option value="F">F</option>
+            </select>
+            <label>Adresse (optionnel)</label>
+            <input type="text" th:field="*{address}">
+            <label>Téléphone (optionnel)</label>
+            <input type="text" th:field="*{phone}">
+            <button type="submit">Enregistrer les modifications</button>
+        </form>
+    </div>
+    <p><a th:href="@{/patients}">← Retour à la liste</a></p>
+</div>
 </body>
 </html>
