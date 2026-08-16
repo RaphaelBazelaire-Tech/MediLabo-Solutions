@@ -1,0 +1,313 @@
+:root {
+
+    /* ============================================================
+                             Mise en page
+    ============================================================ */
+    /* Le fond général */
+    --bg: #eef2f6;
+    /* Le fond pour les cartes et panneaux blancs */
+    --surface: #ffffff;
+
+    /* Couleur du texte principal */
+    --text: #1f2a37;
+    /* Couleur du texte secondaire */
+    --text-muted: #64748b;
+
+    /* Couleur primaire */
+    --primary: #0f766e;
+    /* Couleur primaire : survol / état actif */
+    --primary-dark: #115e59;
+
+    /* Bordures, arrondis, ombre */
+    --border: #e2e8f0;
+    --radius: 8px;
+    --shadow: 0 1px 3px rgba(15, 23, 42, .08);
+
+    /* Unité d'espacement de base */
+    --space: 16px;
+}
+
+    /* ============================================================
+                      Réinitialisation légère
+
+    Explication :
+    box-sizing : border-box inclut -> padding et bordure (largeur)
+    d'un élément -> Plus facile à raisonner.
+    ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
+}
+
+    /* ============================================================
+                       En-tête de l'application
+    ============================================================ */
+
+.app-header {
+    background: var(--surface);
+    border-top: 3px solid var(--primary);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space) 0;
+    margin-bottom: calc(var(--space) * 1.5);
+}
+
+.app-header__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--space);
+}
+
+.app-header__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.app-header__subtitle {
+    margin: 2px 0 0;
+    font-size: .85rem;
+    color: var(--text-muted);
+}
+
+    /* ============================================================
+                   Conteneur principal centré + carte
+    ============================================================ */
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--space) calc(var(--space) * 3);
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: calc(var(--space) * 1.5);
+    margin-bottom: calc(var(--space) * 1.5);
+}
+
+    /* ============================================================
+                         Titres et séparateurs
+    ============================================================ */
+
+h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 var(--space);
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 var(--space);
+}
+
+h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: var(--space) 0 8px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: calc(var(--space) * 1.5) 0;
+}
+
+    /* ============================================================
+                      Tableau (liste des patients)
+    ============================================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: #f8fafc;
+    font-weight: 600;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: var(--text-muted);
+}
+
+tbody tr:nth-child(even) {
+    background: #fbfcfe;
+}
+
+tbody tr:hover {
+    background: #f1f5f9;
+}
+
+    /* ============================================================
+                          Liens et boutons
+    ============================================================ */
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn, button {
+    display: inline-block;
+    font: inherit;
+    cursor: pointer;
+    padding: 9px 16px;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: #ffffff;
+    text-decoration: none;
+    transition: background .15s ease;
+}
+
+.btn:hover, button:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+    /* ============================================================
+                             Formulaires
+    ============================================================ */
+
+label {
+    display: block;
+    margin: var(--space) 0 6px;
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+input, select, textarea {
+    font: inherit;
+    width: 100%;
+    max-width: 380px;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #ffffff;
+    color: var(--text);
+}
+
+textarea {
+    max-width: 100%;
+    resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, .15);
+}
+
+form button {
+    margin-top: var(--space);
+}
+
+    /* ============================================================
+               Fiche patient : lignes "libellé : valeur"
+    ============================================================ */
+
+.field {
+    margin: 8px 0;
+}
+
+.field__label {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-right: 6px;
+}
+
+    /* ============================================================
+                         Historique des notes
+    ============================================================ */
+
+.notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.note-item {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    white-space: pre-line;
+}
+
+    /* ============================================================
+                  Badge de niveau de risque (4 niveaux)
+    Les classes risk-* correspondent à celles faites par Thymeleaf.
+    ============================================================ */
+
+.risk-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .95rem;
+    border: 1px solid transparent;
+}
+
+.risk-none {
+    background: #e7f4ec;
+    color: #1b7a43;
+    border-color: #bfe3cd;
+}
+
+.risk-borderline {
+    background: #fdf4e3;
+    color: #8a6100;
+    border-color: #f2dca8;
+}
+
+.risk-danger {
+    background: #fceee0;
+    color: #9a4a00;
+    border-color: #f3d3b0;
+}
+
+.risk-early {
+    background: #fce8e8;
+    color: #9b1c1c;
+    border-color: #f3c2c2;
+}
+
+    /* ============================================================
+                     Support téléphone / petit écran
+         Le tableau peut défiler horizontalement grâce à ça
+    ============================================================ */
+
+@media (max-width: 640px) {
+    .table-wrapper {
+        overflow-x: auto;
+    }
+}
